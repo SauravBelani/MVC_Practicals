@@ -1,0 +1,104 @@
+﻿@using PagedList
+@using PagedList.Mvc
+@model IPagedList<Practical_13.Models.TblEmployee>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+<input type="text" id="forsearch" value="" />
+<br />
+<br />
+<table class="table" id="dataTable">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().Age)
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+</table>
+
+@section Scripts
+        {
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            GetEmps();
+            $("#forsearch").keyup(function () {
+                GetEmps();
+            });
+        });
+        function GetEmps() {
+            var eName = $.trim($("#forsearch").val());
+            var page = getUrlVars()["Page"];
+            $.ajax({
+                type: "POST",
+                url: "/TblEmployees/Search/",
+                data: "{eName:'" + eName + "',page:'" + page + "'}",
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (employees) {
+                    var table = $("#dataTable");
+                    table.find("tr:not(:first)").remove();
+                    $.each(employees, function (i, emp) {
+                        debugger;
+                        var table = $("#dataTable");
+                        var row = table[0].insertRow(-1);
+                        debugger;
+                        var dt = new Date(parseInt(emp.DOB.replace('/Date(', '')))
+                        var dtfinal = add(dt.getDate(), 2) + '/' +
+                            add(dt.getMonth() + 1, 2) + '/' +
+                            add(dt.getFullYear(), 4)
+                        $(row).append("<td />");
+                        $(row).find("td").eq(0).html(emp.Name);
+                        $(row).append("<td />");
+                        $(row).find("td").eq(1).html(dtfinal);
+                        $(row).append("<td />");
+                        $(row).find("td").eq(2).html(emp.Age);
+                        $(row).append("<td />");
+                        $(row).find("td").eq(3).html("<a href='/TblEmployees/Edit/" + emp.Id + "'>Edit</a> | <a href='/TblEmployees/Details/" + emp.Id + "'>Details</a> | <a href='/TblEmployees/Delete/" + emp.Id + "'>Delete</a>");
+                        //$(row).append("<td />");
+                        //$(row).find("td").eq(4).html("<a href='/TblEmployees/Details/" + emp.Id + "'>Details</a>");
+                        //$(row).append("<td />");
+                        //$(row).find("td").eq(5).html("<a href='/TblEmployees/Delete/" + emp.Id + "'>Delete</a>");
+                        $(row).append("<td/>");
+                        $(row).find("td").eq(6).html("</html>");
+                        //$(row).append("<div id='divpage'><div class='pagination-container'><ul class='pagination'><li class='active'><a>1</a></li><li><a href='/?Page=2'>2</a></li><li class='PagedList-skipToNext'><a href='/?Page=2' rel='next'>»</a></li></ul></div></div>");
+                    });
+                }
+            });
+        } function getUrlVars() {
+            var vars = [], hash;
+            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+            return vars;
+        }
+        function add(no, size) {
+            var s = "0000" + no;
+            return s.substr(s.length - size);
+        }
+    </script>
+}
+
+<div id="divpage" class="center-block">
+    @Html.PagedListPager(Model, Page => Url.Action("Index", new { Page }),
+    new PagedListRenderOptions() { Display = PagedListDisplayMode.IfNeeded})
+</div>

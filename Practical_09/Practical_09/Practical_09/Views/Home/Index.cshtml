@@ -1,0 +1,46 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<div class="jumbotron">
+    <h2 style="color:chocolate">Welcome to Dot Net Tutorials</h2>
+</div>
+<script>
+    function myFunction() {
+        $.getScript("/Home/WarningMessage");
+    }
+</script>
+
+
+<div class="navbar-collapse collapse">
+    <h3>Test 1</h3>
+    <ul class="nav navbar-nav">
+        <li>In URL type Employee/{name}</li>
+    </ul>
+</div>
+<br />
+<div class="navbar-collapse collapse">
+    <h3>Test 2</h3>
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("ContentResult", "ContentResult", "Home")</li>
+        <li>@Html.ActionLink("EmptyResult", "EmptyData", "Home")</li>
+        <li><a onclick="myFunction()">JavaScriptResult</a></li>
+        <li>@Html.ActionLink("FileContentResult", "DownloadContent", "Home")</li>
+        <li>@Html.ActionLink("JsonResult", "JsonResult", "Home")</li>
+    </ul>
+</div>
+<br />
+<div class="navbar-collapse collapse">
+    <h3>Test 3</h3>
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("OutputCache", "OutPutTest", "Home")</li>
+    </ul>
+</div>
+<br />
+<div class="navbar-collapse collapse">
+    <h3>Test 3</h3>
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("ExceptionFilter", "Exception", "Home")</li>
+    </ul>
+</div>

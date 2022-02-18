@@ -1,0 +1,84 @@
+﻿@model IEnumerable<Practical_12_2_.Data.App_Data.ViewModel>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+<p>
+    @Html.ActionLink("Count Number of records", "CountRecords")
+</p>
+<p>
+    @if (TempData["Count"] != null)
+    {
+        @TempData["Count"];
+    }
+</p>
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.MiddleName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.LastName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.designations.designation1)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.DOB)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.MobileNumber)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.Address)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.employees.Salary)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.designations.designation1)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.DOB)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.MobileNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.Address)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.employees.Salary)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.employees.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.employees.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.employees.Id })
+            </td>
+        </tr>
+    }
+
+</table>
